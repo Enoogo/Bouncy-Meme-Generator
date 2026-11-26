@@ -12,7 +12,12 @@ from tkinter import filedialog, messagebox, ttk
 from PIL import Image, ImageOps, ImageTk
 
 
-CONFIG_PATH = Path(__file__).resolve().with_name("q_bounce_config.json")
+DEFAULT_CONFIG_PATH = Path(__file__).resolve().with_name("q_bounce_config.json")
+CONFIG_PATH = (
+    Path(sys.executable).with_name(DEFAULT_CONFIG_PATH.name)
+    if getattr(sys, "frozen", False)
+    else DEFAULT_CONFIG_PATH
+)
 TRANSPARENT = 255
 MIN_FRAME_MS = 20
 
@@ -83,7 +88,9 @@ def parse_settings(values):
     return Settings(**parsed)
 
 
-def load_settings(path=CONFIG_PATH):
+def load_settings(path=None):
+    if path is None:
+        path = CONFIG_PATH if CONFIG_PATH.exists() else DEFAULT_CONFIG_PATH
     values = json.loads(path.read_text(encoding="utf-8-sig"))
     if not isinstance(values, dict):
         raise ValueError("配置文件需要是 JSON 对象。")
