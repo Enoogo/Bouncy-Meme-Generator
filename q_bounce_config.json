@@ -1,0 +1,12 @@
+{
+  "base_width_px": 300,
+  "pressed_height_percent": 49,
+  "pressed_width_ratio": 2,
+  "press_ms": 60,
+  "release_ms": 90,
+  "top_hold_ms": 160,
+  "bottom_hold_ms": 170,
+  "ease_start_percent": 10,
+  "ease_end_percent": 14,
+  "transition_frames": 3
+}
